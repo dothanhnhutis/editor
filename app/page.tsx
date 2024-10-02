@@ -1,9 +1,26 @@
 "use client";
 import React from "react";
-import EditorContent from "./editor/editor-content";
-import { schema } from "./editor/custom-schema";
-import { customKeymap } from "./editor/custom-keymap";
+import { useEditor } from "./core/useEditor";
+import EditorContent from "./core/editorContent";
+import { schema } from "./core/custom-schema";
+import { customKeymap } from "./core/custom-keymap";
 
 export default function Home() {
-  return <EditorContent schema={schema} plugins={[customKeymap]} />;
+  const editor = useEditor({
+    schema,
+    plugins: [customKeymap],
+    onUpdate: ({ editor }) => {
+      console.log({
+        json: editor.getJSON(),
+      });
+    },
+  });
+  if (!editor) return <div>Loading...</div>;
+
+  return (
+    <EditorContent
+      editor={editor}
+      className="[&_.ProseMirror]:outline-none [&_.ProseMirror]:whitespace-pre-wrap"
+    />
+  );
 }

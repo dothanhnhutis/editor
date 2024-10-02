@@ -76,6 +76,6 @@ export const customKeymap = keymap({
   },
   "Mod-b": (state, dispatch) => {
     const markType = state.schema.marks.bold;
-    return toggleBold(markType)(state, dispatch);
+    return toggleMark(markType)(state, dispatch);
   },
 });
